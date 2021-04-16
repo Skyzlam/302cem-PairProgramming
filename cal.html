@@ -1,0 +1,1011 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+            integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+            crossorigin="anonymous"></script>
+    <style>
+        td {
+            font-size: 10px;
+        }
+
+        .form-control {
+            font-size: 10px !important;
+        }
+    </style>
+</head>
+<body>
+<script>
+    function calculateTax() {
+        let marital = document.querySelector('input[name="marital"]:checked').value;
+
+        let sIncome = parseInt(document.getElementsByName('sIncome')[0].value);
+        let sResidence = parseInt(document.getElementsByName('sResidence')[0].value);
+        let sExpenses = parseInt(document.getElementsByName('sExpenses')[0].value);
+        let sEducation = parseInt(document.getElementsByName('sEducation')[0].value);
+        let sDonations = parseInt(document.getElementsByName('sDonations')[0].value);
+        let sContributions = parseInt(document.getElementsByName('sContributions')[0].value);
+        let sMpf = parseInt(document.getElementsByName('sMpf')[0].value);
+        let sAnnuity = parseInt(document.getElementsByName('sAnnuity')[0].value);
+        let sLoan = parseInt(document.getElementsByName('sLoan')[0].value);
+        let sSelf = parseInt(document.getElementsByName('sSelf')[0].value);
+        let sSpecified = parseInt(document.getElementsByName('sSpecified')[0].value);
+        let sRelative = parseInt(document.getElementsByName('sRelative')[0].value);
+        let sHomeCare = parseInt(document.getElementsByName('sHomeCare')[0].value);
+        let sDisabled = parseInt(document.getElementsByName('sDisabled')[0].value);
+        let sResidential = parseInt(document.getElementsByName('sResidential')[0].value);
+        let sEligible = document.getElementsByName('sEligible')[0].value;
+        let sBorn = parseInt(document.getElementsByName('sBorn')[0].value);
+        let sBornOther = parseInt(document.getElementsByName('sBornOther')[0].value);
+        let sSingle = document.getElementsByName('sSingle')[0].value;
+        let sBros = parseInt(document.getElementsByName('sBros')[0].value);
+        let sResidedTop = parseInt(document.getElementsByName('sResidedTop')[0].value);
+        let sNotResidedTop = parseInt(document.getElementsByName('sNotResidedTop')[0].value);
+        let sResided = parseInt(document.getElementsByName('sResided')[0].value);
+        let sNotResided = parseInt(document.getElementsByName('sNotResided')[0].value);
+
+        let pIncome = parseInt(document.getElementsByName('pIncome')[0].value);
+        let pResidence = parseInt(document.getElementsByName('pResidence')[0].value);
+        let pExpenses = parseInt(document.getElementsByName('pExpenses')[0].value);
+        let pEducation = parseInt(document.getElementsByName('pEducation')[0].value);
+        let pDonations = parseInt(document.getElementsByName('pDonations')[0].value);
+        let pContributions = parseInt(document.getElementsByName('pContributions')[0].value);
+        let pMpf = parseInt(document.getElementsByName('pMpf')[0].value);
+        let pAnnuity = parseInt(document.getElementsByName('pAnnuity')[0].value);
+        let pLoan = parseInt(document.getElementsByName('pLoan')[0].value);
+        let pSelf = parseInt(document.getElementsByName('pSelf')[0].value);
+        let pSpecified = parseInt(document.getElementsByName('pSpecified')[0].value);
+        let pRelative = parseInt(document.getElementsByName('pRelative')[0].value);
+        let pHomeCare = parseInt(document.getElementsByName('pHomeCare')[0].value);
+        let pDisabled = parseInt(document.getElementsByName('pDisabled')[0].value);
+        let pResidential = parseInt(document.getElementsByName('pResidential')[0].value);
+        let pEligible = document.getElementsByName('pEligible')[0].value;
+        let pBorn = parseInt(document.getElementsByName('pBorn')[0].value);
+        let pBornOther = parseInt(document.getElementsByName('pBornOther')[0].value);
+        let pBros = parseInt(document.getElementsByName('pBros')[0].value);
+        let pResidedTop = parseInt(document.getElementsByName('pResidedTop')[0].value);
+        let pNotResidedTop = parseInt(document.getElementsByName('pNotResidedTop')[0].value);
+        let pSpouseD = parseInt(document.getElementsByName('pSpouseD')[0].value);
+
+        if (marital == 'single') {
+            document.getElementById('singleResult').style.display = "block";
+            document.getElementById('marriedResult').style.display = "none";
+
+            document.getElementById('tIncome').innerHTML = sIncome + sResidence;
+            document.getElementById('tDeductions').innerHTML = sExpenses + sEducation + sDonations + sContributions + sMpf + sAnnuity + sLoan + sSelf + (sRelative) + sResidential;
+            document.getElementById('basicA').innerHTML = 132000;
+            document.getElementById('singleParent').innerHTML = sSingle == 'YES' ? 132000 : 0;
+            document.getElementById('pDisability').innerHTML = sEligible == 'YES' ? 75000 : 0;
+            document.getElementById('bornYear').innerHTML = sBorn * 240000;
+            document.getElementById('bornOthers').innerHTML = sBornOther * 120000;
+            document.getElementById('brothersSisters').innerHTML = sBros * 37500;
+            document.getElementById('total60').innerHTML = (sResidedTop * 100000) + (sNotResidedTop * 50000);
+            document.getElementById('total55').innerHTML = (sResided * 50000) + (sNotResided * 25000);
+            document.getElementById('disabledDependants').innerHTML = (sDisabled * 75000);
+
+            let total = parseInt(document.getElementById('basicA').innerHTML) +
+                parseInt(document.getElementById('singleParent').innerHTML) +
+                parseInt(document.getElementById('pDisability').innerHTML) +
+                parseInt(document.getElementById('bornYear').innerHTML) +
+                parseInt(document.getElementById('bornOthers').innerHTML) +
+                parseInt(document.getElementById('brothersSisters').innerHTML) +
+                parseInt(document.getElementById('total60').innerHTML) +
+                parseInt(document.getElementById('total55').innerHTML) +
+                parseInt(document.getElementById('disabledDependants').innerHTML);
+            document.getElementById('totalAllow').innerHTML = total;
+
+            let taxable = parseInt(document.getElementById('tIncome').innerHTML) -
+                total -
+                parseInt(document.getElementById('tDeductions').innerHTML);
+
+            if(taxable > 0) {
+                document.getElementById('netCharge').innerHTML = taxable;
+
+                let tax1 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.02 : taxable * 0.02) : 0;
+                taxable -= 50000;
+
+                let tax2 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.06 : taxable * 0.06) : 0;
+                taxable -= 50000;
+
+                let tax3 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.1 : taxable * 0.1) : 0;
+                taxable -= 50000;
+
+                let tax4 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.14 : taxable * 0.14) : 0;
+                taxable -= 50000;
+
+                let tax5 = taxable > 0 ? (taxable * 0.17) : 0;
+
+                let totalTax = tax1 + tax2 + tax3 + tax4 + tax5;
+                let reduction = 10000;
+
+                document.getElementById('totalTax').innerHTML = totalTax;
+                document.getElementById('totalReduction').innerHTML = reduction;
+                document.getElementById('netTax').innerHTML = totalTax - reduction;
+            }else{
+                document.getElementById('netCharge').innerHTML = 0;
+                document.getElementById('totalTax').innerHTML = 0;
+                document.getElementById('totalReduction').innerHTML = 0;
+                document.getElementById('netTax').innerHTML = 0;
+            }
+        } else {
+            document.getElementById('singleResult').style.display = "none";
+            document.getElementById('marriedResult').style.display = "block";
+
+            document.getElementById('tIncome1').innerHTML = sIncome + sResidence;
+            document.getElementById('tDeductions1').innerHTML = sExpenses + sEducation + sDonations + sContributions + sMpf + sAnnuity + sLoan + sSelf + (sRelative) + sResidential;
+            document.getElementById('basicA1').innerHTML = 132000;
+            document.getElementById('singleParent1').innerHTML = sSingle == 'YES' ? 132000 : 0;
+            document.getElementById('pDisability1').innerHTML = sEligible == 'YES' ? 75000 : 0;
+            document.getElementById('bornYear1').innerHTML = sBorn * 240000;
+            document.getElementById('bornOthers1').innerHTML = sBornOther * 120000;
+            document.getElementById('brothersSisters1').innerHTML = sBros * 37500;
+            document.getElementById('total601').innerHTML = (sResidedTop * 100000) + (sNotResidedTop * 50000);
+            document.getElementById('total551').innerHTML = (sResided * 50000) + (sNotResided * 25000);
+            document.getElementById('disabledDependants1').innerHTML = (sDisabled * 75000);
+
+            let total = parseInt(document.getElementById('basicA1').innerHTML) +
+                parseInt(document.getElementById('singleParent1').innerHTML) +
+                parseInt(document.getElementById('pDisability1').innerHTML) +
+                parseInt(document.getElementById('bornYear1').innerHTML) +
+                parseInt(document.getElementById('bornOthers1').innerHTML) +
+                parseInt(document.getElementById('brothersSisters1').innerHTML) +
+                parseInt(document.getElementById('total601').innerHTML) +
+                parseInt(document.getElementById('total551').innerHTML) +
+                parseInt(document.getElementById('disabledDependants1').innerHTML);
+            document.getElementById('totalAllow1').innerHTML = total;
+
+            let taxable = parseInt(document.getElementById('tIncome1').innerHTML) -
+                total -
+                parseInt(document.getElementById('tDeductions1').innerHTML);
+
+            if(taxable > 0) {
+                document.getElementById('netCharge1').innerHTML = taxable;
+
+                let tax1 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.02 : taxable * 0.02) : 0;
+                taxable -= 50000;
+
+                let tax2 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.06 : taxable * 0.06) : 0;
+                taxable -= 50000;
+
+                let tax3 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.1 : taxable * 0.1) : 0;
+                taxable -= 50000;
+
+                let tax4 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.14 : taxable * 0.14) : 0;
+                taxable -= 50000;
+
+                let tax5 = taxable > 0 ? (taxable * 0.17) : 0;
+
+                let totalTax = tax1 + tax2 + tax3 + tax4 + tax5;
+                let reduction = 10000;
+
+                document.getElementById('totalTax1').innerHTML = totalTax;
+                document.getElementById('totalReduction1').innerHTML = reduction;
+                document.getElementById('netTax1').innerHTML = totalTax - reduction;
+            }else{
+                document.getElementById('netCharge1').innerHTML = 0;
+                document.getElementById('totalTax1').innerHTML = 0;
+                document.getElementById('totalReduction1').innerHTML = 0;
+                document.getElementById('netTax1').innerHTML = 0;
+            }
+
+            //spouse
+            document.getElementById('tIncome2').innerHTML = pIncome + pResidence;
+            document.getElementById('tDeductions2').innerHTML = pExpenses + pEducation + pDonations + pContributions + pMpf + pAnnuity + pLoan + pSelf + (pRelative) + pResidential;
+            document.getElementById('basicA2').innerHTML = 132000;
+            document.getElementById('singleParent2').innerHTML = 0;
+            document.getElementById('pDisability2').innerHTML = pEligible == 'YES' ? 75000 : 0;
+            document.getElementById('bornYear2').innerHTML = pBorn * 240000;
+            document.getElementById('bornOthers2').innerHTML = pBornOther * 120000;
+            document.getElementById('brothersSisters2').innerHTML = pBros * 37500;
+            document.getElementById('total602').innerHTML = (pResidedTop * 100000) + (pNotResidedTop * 50000);
+            document.getElementById('total552').innerHTML = 0;
+            document.getElementById('disabledDependants2').innerHTML = (pDisabled * 75000);
+
+            total = parseInt(document.getElementById('basicA2').innerHTML) +
+                parseInt(document.getElementById('singleParent2').innerHTML) +
+                parseInt(document.getElementById('pDisability2').innerHTML) +
+                parseInt(document.getElementById('bornYear2').innerHTML) +
+                parseInt(document.getElementById('bornOthers2').innerHTML) +
+                parseInt(document.getElementById('brothersSisters2').innerHTML) +
+                parseInt(document.getElementById('total602').innerHTML) +
+                parseInt(document.getElementById('total552').innerHTML) +
+                parseInt(document.getElementById('disabledDependants2').innerHTML);
+            document.getElementById('totalAllow2').innerHTML = total;
+
+            taxable = parseInt(document.getElementById('tIncome2').innerHTML) -
+                total -
+                parseInt(document.getElementById('tDeductions2').innerHTML);
+
+            if(taxable > 0) {
+                document.getElementById('netCharge2').innerHTML = taxable;
+
+                let tax1 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.02 : taxable * 0.02) : 0;
+                taxable -= 50000;
+
+                let tax2 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.06 : taxable * 0.06) : 0;
+                taxable -= 50000;
+
+                let tax3 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.1 : taxable * 0.1) : 0;
+                taxable -= 50000;
+
+                let tax4 = taxable >= 50000 ? (taxable > 50000 ? 50000 * 0.14 : taxable * 0.14) : 0;
+                taxable -= 50000;
+
+                let tax5 = taxable > 0 ? (taxable * 0.17) : 0;
+
+                let totalTax = tax1 + tax2 + tax3 + tax4 + tax5;
+                let reduction = 10000;
+
+                document.getElementById('totalTax2').innerHTML = totalTax;
+                document.getElementById('totalReduction2').innerHTML = reduction;
+                document.getElementById('netTax2').innerHTML = totalTax - reduction;
+            }else{
+                document.getElementById('netCharge2').innerHTML = 0;
+                document.getElementById('totalTax2').innerHTML = 0;
+                document.getElementById('totalReduction2').innerHTML = 0;
+                document.getElementById('netTax2').innerHTML = 0;
+            }
+
+            //combined
+            document.getElementById('tIncome3').innerHTML = parseInt(document.getElementById('tIncome1').innerHTML) + parseInt(document.getElementById('tIncome2').innerHTML);
+            document.getElementById('tDeductions3').innerHTML = parseInt(document.getElementById('tDeductions1').innerHTML) + parseInt(document.getElementById('tDeductions2').innerHTML);
+            document.getElementById('basicA3').innerHTML = parseInt(document.getElementById('basicA1').innerHTML) + parseInt(document.getElementById('basicA2').innerHTML);
+            document.getElementById('singleParent3').innerHTML = parseInt(document.getElementById('singleParent1').innerHTML) + parseInt(document.getElementById('singleParent2').innerHTML);
+            document.getElementById('pDisability3').innerHTML = parseInt(document.getElementById('pDisability1').innerHTML) + parseInt(document.getElementById('pDisability2').innerHTML);
+            document.getElementById('bornYear3').innerHTML = parseInt(document.getElementById('bornYear1').innerHTML) + parseInt(document.getElementById('bornYear2').innerHTML);
+            document.getElementById('bornOthers3').innerHTML = parseInt(document.getElementById('bornOthers1').innerHTML) + parseInt(document.getElementById('bornOthers2').innerHTML);
+            document.getElementById('brothersSisters3').innerHTML = parseInt(document.getElementById('brothersSisters1').innerHTML) + parseInt(document.getElementById('brothersSisters2').innerHTML);
+            document.getElementById('total603').innerHTML = parseInt(document.getElementById('total601').innerHTML) + parseInt(document.getElementById('total602').innerHTML);
+            document.getElementById('total553').innerHTML = parseInt(document.getElementById('total551').innerHTML) + parseInt(document.getElementById('total552').innerHTML);
+            document.getElementById('disabledDependants3').innerHTML = parseInt(document.getElementById('disabledDependants1').innerHTML) + parseInt(document.getElementById('disabledDependants2').innerHTML);
+
+            document.getElementById('netCharge3').innerHTML = parseInt(document.getElementById('netCharge1').innerHTML) + parseInt(document.getElementById('netCharge2').innerHTML);
+            document.getElementById('totalTax3').innerHTML = parseInt(document.getElementById('totalTax1').innerHTML) + parseInt(document.getElementById('totalTax2').innerHTML);
+            document.getElementById('totalReduction3').innerHTML = parseInt(document.getElementById('totalReduction1').innerHTML) + parseInt(document.getElementById('totalReduction2').innerHTML);
+            document.getElementById('netTax3').innerHTML = parseInt(document.getElementById('netTax1').innerHTML) + parseInt(document.getElementById('netTax2').innerHTML);
+        }
+
+        return false;
+    }
+</script>
+<form onsubmit="return calculateTax();">
+    <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 10px;">
+        <div class="col-md-6">
+            <table border="1" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td width="44%">
+                        Year of assessment
+                    </td>
+                    <td colspan="2">
+                        2020/21
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Marital status
+                    </td>
+                    <td width="33%">
+                        <input type="radio" name="marital" value="single" checked> Single / Separated / Divorced /
+                        Widowed
+                    </td>
+                    <td width="33%">
+                        <input type="radio" name="marital" value="married"> Married
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+
+                    </td>
+                    <td width="33%">
+                        <b>Self</b>
+                    </td>
+                    <td width="33%">
+                        <b>Spouse</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Income for the year of assessment
+                    </td>
+                    <td width="33%">
+                        <input name="sIncome" type="number" value="6000000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pIncome" type="number" value="400000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Value of all places of residence provided by employer or associated corporation
+                    </td>
+                    <td width="33%">
+                        <input name="sResidence" type="number" value="30000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pResidence" type="number" value="20000" class="form-control">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <b>Deductions</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Outgoings and Expenses
+                    </td>
+                    <td width="33%">
+                        <input name="sExpenses" type="number" value="20000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pExpenses" type="number" value="10000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Self Education Expenses
+                    </td>
+                    <td width="33%">
+                        <input name="sEducation" type="number" value="10000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pEducation" type="number" value="7000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Approved Charitable Donations
+                    </td>
+                    <td width="33%">
+                        <input name="sDonations" type="number" value="2000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pDonations" type="number" value="1000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Mandatory Contributions to Recognized Retirement Schemes
+                    </td>
+                    <td width="33%">
+                        <input name="sContributions" type="number" value="1000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pContributions" type="number" value="1000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Tax Deductible MPF Voluntary Contributions
+                    </td>
+                    <td width="33%">
+                        <input name="sMpf" type="number" value="2000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pMpf" type="number" value="1000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Qualifying Annuity Premiums
+                    </td>
+                    <td width="33%">
+                        <input name="sAnnuity" type="number" value="1000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pAnnuity" type="number" value="1000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Home Loan Interest
+                    </td>
+                    <td width="33%">
+                        <input name="sLoan" type="number" value="4000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pLoan" type="number" value="3000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <b>Qualifying Health Insurance Premiums</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Amount paid for self
+                    </td>
+                    <td width="33%">
+                        <input name="sSelf" type="number" value="1000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pSelf" type="number" value="1000" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        No. of specified relative(s)
+                    </td>
+                    <td width="33%">
+                        <select name="sSpecified" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option selected value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pSpecified" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Amount paid for specified relative(s
+                    </td>
+                    <td width="33%">
+                        <input name="sRelative" type="number" value="1000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pRelative" type="number" value="500" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <b>Elderly Residential Care Expenses</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        No. of dependant(s) resided in
+                        residential care home
+                    </td>
+                    <td width="33%">
+                        <select name="sHomeCare" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pHomeCare" class="form-control">
+                            <option value="0">0</option>
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        No. of dependant(s) eligible for
+                        Disabled Dependant Allowance
+                    </td>
+                    <td width="33%">
+                        <select name="sDisabled" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pDisabled" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option selected value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Amount paid to residential care home
+                    </td>
+                    <td width="33%">
+                        <input name="sResidential" type="number" value="1000" class="form-control">
+                    </td>
+                    <td width="33%">
+                        <input name="pResidential" type="number" value="500" class="form-control">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <b>Allowances</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Eligible to claim Personal Disability Allowance
+                    </td>
+                    <td width="33%">
+                        <select name="sEligible" class="form-control">
+                            <option value="NO">NO</option>
+                            <option selected value="YES">YES</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pEligible" class="form-control">
+                            <option value="NO">NO</option>
+                            <option value="YES">YES</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <b>Other Allowances Claimed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        No. of dependant(s) claimed
+                    </td>
+                    <td>
+                        Of the dependant(s) claimed,
+                        No. of dependant(s) eligible for Disabled Dependant Allowance
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <b>No. of dependent children</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Born in the year
+                    </td>
+                    <td width="33%">
+                        <select name="sBorn" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option selected value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pBorn" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option selected value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Born in other year(s)
+                    </td>
+                    <td width="33%">
+                        <select name="sBornOther" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option selected value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pBornOther" class="form-control">
+                            <option value="0">0</option>
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Single Parent Allowance
+                    </td>
+                    <td width="33%">
+                        <select name="sSingle" class="form-control">
+                            <option value="NO">NO</option>
+                            <option selected value="YES">YES</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        No. of dependent brothers / sisters
+                    </td>
+                    <td width="33%">
+                        <select name="sBros" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pBros" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option selected value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        Dependent parents/grandparents aged 60 or over, or aged under 60 but eligible to claim
+                        Government's Disability Allowance<br>
+                        No. of dependent parents/grandparents maintained by you
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="44%">
+                        Resided with you throughout the year
+                    </td>
+                    <td width="33%">
+                        <select name="sResidedTop" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pResidedTop" class="form-control">
+                            <option value="0">0</option>
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Not resided with you throughout the year
+                    </td>
+                    <td width="33%">
+                        <select name="sNotResidedTop" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td width="33%">
+                        <select name="pNotResidedTop" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option selected value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        Dependent parents/grandparents aged 55 or over but under 60<br>
+                        No. of dependent parents/grandparents maintained by you
+                    </td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Resided with you throughout the year
+                    </td>
+                    <td width="33%">
+                        <select name="sResided" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="44%">
+                        Not resided with you throughout the year
+                    </td>
+                    <td width="33%">
+                        <select name="sNotResided" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Your spouse is eligible for Disabled Dependant Allowance
+                    </td>
+                    <td></td>
+                    <td>
+                        <select name="pSpouseD" class="form-control">
+                            <option value="NO">NO</option>
+                            <option value="YES">YES</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <input type="reset" value="RESET" class="btn btn-danger">
+            <input type="submit" value="COMPUTE" class="btn btn-success">
+
+            <div class="row">
+                <div class="col-md-12" id="singleResult"  style="margin-top: 20px; display: none; width: 100%;">
+                    <table width="100%" border="1">
+                        <tbody>
+                        <tr>
+                            <td width="80%">TOTAL INCOME</td>
+                            <td width="20%" align="right" id="tIncome"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">DEDUCTIONS</td>
+                            <td width="20%" align="right" id="tDeductions"></td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="2">ALLOWANCES:-</td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Basic</td>
+                            <td width="20%" align="right" id="basicA"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Single Parent</td>
+                            <td width="20%" align="right" id="singleParent"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Personal Disability</td>
+                            <td width="20%" align="right" id="pDisability"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Child(ren)</td>
+                            <td width="20%" align="right"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Born in the year</td>
+                            <td width="20%" align="right" id="bornYear"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Born in other year(s)</td>
+                            <td width="20%" align="right" id="bornOthers"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Dependent Brother(s) / Sister(s)</td>
+                            <td width="20%" align="right" id="brothersSisters"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Dependent Parent(s) / Grandparent(s)</td>
+                            <td width="20%" align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Aged 55 to 59</td>
+                            <td width="20%" align="right" id="total55"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Aged 60 or over, or aged under 60 but disabled
+                            </td>
+                            <td width="20%" align="right" id="total60"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">&nbsp;&nbsp;&nbsp;&nbsp;Disabled Dependant(s)</td>
+                            <td width="20%" align="right" id="disabledDependants"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">TOTAL ALLOWANCES</td>
+                            <td width="20%" align="right" id="totalAllow"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">NET CHARGEABLE INCOME</td>
+                            <td width="20%" align="right" id="netCharge"></td>
+                        </tr>
+                        <tr>
+                            <td width="80%">TAX PAYABLE BY YOU (BEFORE TAX REDUCTION)</td>
+                            <td width="20%" align="right"><font color="#FF0000" id="totalTax"></font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="80%">TAX REDUCTION</td>
+                            <td width="20%" align="right"><font color="#FF0000" id="totalReduction"></font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="80%"><font color="#FF0000">TAX PAYABLE BY YOU (AFTER TAX REDUCTION)</font></td>
+                            <td width="20%" align="right"><font color="#FF0000" id="netTax"></font>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" id="marriedResult"  style="margin-top: 20px; display: none; width: 100%;">
+                    <table width="100%" border="1">
+                        <tbody>
+                        <tr>
+                            <td width="40%">TOTAL INCOME</td>
+                            <td width="20%" align="right" id="tIncome1"></td>
+                            <td width="20%" align="right" id="tIncome2"></td>
+                            <td width="20%" align="right" id="tIncome3"></td>
+                        </tr>
+                        <tr>
+                            <td>DEDUCTIONS</td>
+                            <td align="right" id="tDeductions1"></td>
+                            <td align="right" id="tDeductions2"></td>
+                            <td align="right" id="tDeductions3"></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="4">ALLOWANCES:-</td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;Basic</td>
+                            <td  align="right" id="basicA1"></td>
+                            <td  align="right" id="basicA2"></td>
+                            <td  align="right" id="basicA3"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;Single Parent</td>
+                            <td  align="right" id="singleParent1"></td>
+                            <td  align="right" id="singleParent2"></td>
+                            <td  align="right" id="singleParent3"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;Personal Disability</td>
+                            <td  align="right" id="pDisability1"></td>
+                            <td  align="right" id="pDisability2"></td>
+                            <td  align="right" id="pDisability3"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" >&nbsp;&nbsp;&nbsp;&nbsp;Child(ren)</td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Born in the year</td>
+                            <td  align="right" id="bornYear1"></td>
+                            <td  align="right" id="bornYear2"></td>
+                            <td  align="right" id="bornYear3"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Born in other year(s)</td>
+                            <td  align="right" id="bornOthers1"></td>
+                            <td  align="right" id="bornOthers2"></td>
+                            <td  align="right" id="bornOthers3"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;Dependent Brother(s) / Sister(s)</td>
+                            <td  align="right" id="brothersSisters1"></td>
+                            <td  align="right" id="brothersSisters2"></td>
+                            <td  align="right" id="brothersSisters3"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;Dependent Parent(s) / Grandparent(s)</td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Aged 55 to 59</td>
+                            <td  align="right" id="total551"></td>
+                            <td  align="right" id="total552"></td>
+                            <td  align="right" id="total553"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Aged 60 or over, or aged under 60 but disabled
+                            </td>
+                            <td  align="right" id="total601"></td>
+                            <td  align="right" id="total602"></td>
+                            <td  align="right" id="total603"></td>
+                        </tr>
+                        <tr>
+                            <td >&nbsp;&nbsp;&nbsp;&nbsp;Disabled Dependant(s)</td>
+                            <td  align="right" id="disabledDependants1"></td>
+                            <td  align="right" id="disabledDependants2"></td>
+                            <td  align="right" id="disabledDependants3"></td>
+                        </tr>
+                        <tr>
+                            <td >TOTAL ALLOWANCES</td>
+                            <td  align="right" id="totalAllow1"></td>
+                            <td  align="right" id="totalAllow2"></td>
+                            <td  align="right" id="totalAllow3"></td>
+                        </tr>
+                        <tr>
+                            <td >NET CHARGEABLE INCOME</td>
+                            <td  align="right" id="netCharge1"></td>
+                            <td  align="right" id="netCharge2"></td>
+                            <td  align="right" id="netCharge3"></td>
+                        </tr>
+                        <tr>
+                            <td >TAX PAYABLE BY YOU (BEFORE TAX REDUCTION)</td>
+                            <td  align="right"><font color="#FF0000" id="totalTax1"></font>
+                            <td  align="right"><font color="#FF0000" id="totalTax2"></font>
+                            <td  align="right"><font color="#FF0000" id="totalTax3"></font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="4">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td >TAX REDUCTION</td>
+                            <td  align="right"><font color="#FF0000" id="totalReduction1"></font>
+                            <td  align="right"><font color="#FF0000" id="totalReduction2"></font>
+                            <td  align="right"><font color="#FF0000" id="totalReduction3"></font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="4">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td ><font color="#FF0000">TAX PAYABLE BY YOU (AFTER TAX REDUCTION)</font></td>
+                            <td  align="right"><font color="#FF0000" id="netTax1"></font>
+                            <td  align="right"><font color="#FF0000" id="netTax2"></font>
+                            <td  align="right"><font color="#FF0000" id="netTax3"></font>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
